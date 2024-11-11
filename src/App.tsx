@@ -1,15 +1,34 @@
 import React from 'react';
+import { RouterProvider, createHashRouter } from 'react-router-dom';
+import Layout from './components/Layout';
+import Dashboard from './pages/Dashboard';
+import Projects from './pages/Projects';
+import Settings from './pages/Settings';
+
+// Using HashRouter instead of BrowserRouter for Electron compatibility
+const router = createHashRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: 'projects',
+        element: <Projects />,
+      },
+      {
+        path: 'settings',
+        element: <Settings />,
+      },
+    ],
+  },
+]);
 
 const App: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Hello from React + Electron + Tailwind!
-        </h1>
-      </div>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App; 
