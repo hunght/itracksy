@@ -1,6 +1,10 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
 
+// Add these declarations at the top of the file
+declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string | undefined;
+declare const MAIN_WINDOW_VITE_NAME: string;
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
