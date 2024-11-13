@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
+interface ActivityRecord {
+  id: number;
+  windowTitle: string;
+  applicationName: string;
+  startTime: string;
+  endTime: string;
+  duration: number;
+}
+
 export default function Dashboard() {
   const [isTracking, setIsTracking] = useState(false);
   const [activeWindow, setActiveWindow] = useState<any>(null);
-
-  useEffect(() => {
-    console.log('Dashboard: Checking electronAPI availability');
-    console.log('Dashboard: window.electronAPI =', window.electronAPI);
-  }, []);
+  const [activityHistory, setActivityHistory] = useState<ActivityRecord[]>([]);
+ 
 
   const toggleTracking = async () => {
     console.log('Dashboard: Attempting to toggle tracking');
@@ -31,6 +37,7 @@ export default function Dashboard() {
         try {
           const currentWindow = await window.electronAPI.getActiveWindow();
           setActiveWindow(currentWindow);
+ 
         } catch (error) {
           console.error('Error getting active window:', error);
         }
@@ -39,6 +46,16 @@ export default function Dashboard() {
 
     return () => clearInterval(interval);
   }, [isTracking]);
+
+  const formatDuration = (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours}h ${remainingMinutes}m`;
+  };
+
+  const formatDateTime = (dateString: string) => {
+    return new Date(dateString).toLocaleTimeString();
+  };
 
   return (
     <div className="p-4">
@@ -59,6 +76,34 @@ export default function Dashboard() {
           </pre>
         </div>
       )}
+
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Activity History</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-200">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Application</th>
+                <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Window Title</th>
+                <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Time</th>
+                <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Time</th>
+                <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {activityHistory.map((activity) => (
+                <tr key={activity.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{activity.applicationName}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{activity.windowTitle}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{formatDateTime(activity.startTime)}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{formatDateTime(activity.endTime)}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{formatDuration(activity.duration)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 } 
