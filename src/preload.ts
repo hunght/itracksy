@@ -25,3 +25,11 @@ const electronAPI = {
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);
+
+contextBridge.exposeInMainWorld('electron', {
+  ipcRenderer: {
+    invoke: (channel: string, ...args: any[]) => {
+      return ipcRenderer.invoke(channel, ...args)
+    }
+  }
+})

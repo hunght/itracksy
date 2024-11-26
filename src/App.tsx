@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Layout from './components/Layout';
-import Dashboard from './pages/Dashboard';
+import {Dashboard} from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Settings from './pages/Settings';
 

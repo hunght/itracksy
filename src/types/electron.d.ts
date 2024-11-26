@@ -7,6 +7,11 @@ export interface IElectronAPI {
 declare global {
   interface Window {
     electronAPI: IElectronAPI;
+    electron: {
+      ipcRenderer: {
+        invoke(channel: string, ...args: any[]): Promise<any>;
+      };
+    };
   }
 }
 
