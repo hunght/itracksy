@@ -15,6 +15,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
+    "@electron-forge/shared-types": "^7.2.0",
     "@electron-forge/cli": "^7.5.0",
     "@electron-forge/maker-deb": "^7.5.0",
     "@electron-forge/maker-rpm": "^7.5.0",
@@ -31,7 +32,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.18",
     "electron": "33.2.0",
-    "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
@@ -47,12 +47,13 @@
   "license": "MIT",
   "dependencies": {
     "@types/better-sqlite3": "^7.6.12",
-    "active-win": "^8.1.1",
     "better-sqlite3": "^11.6.0",
     "drizzle-kit": "^0.28.1",
     "drizzle-orm": "^0.36.4",
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^10.0.0",
+    "eslint": "^8.56.0",
+    "active-win": "^8.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3"
